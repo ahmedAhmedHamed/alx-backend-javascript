@@ -6,3 +6,6 @@ console.log(map);
 
 updateUniqueItems(map)
 console.log(map);
+
+const notMap = [];
+updateUniqueItems(notMap)
