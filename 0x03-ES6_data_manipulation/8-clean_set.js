@@ -1,9 +1,9 @@
 export default function cleanSet(set, startString) {
   let ret = '';
-  if (startString === '') { return ret; }
+  if (startString === '' || !set || !startString || !(set instanceof Set) || typeof startString !== 'string') { return ret; }
   set.forEach((item) => {
-    if (item.startsWith(startString)) {
-      const appended = item.length > startString.length ? `${item.slice(startString.length)}-` : '';
+    if (typeof item === 'string' && item.startsWith(startString)) {
+      const appended = item.length > startString.length ? `${item.substring(startString.length)}-` : '';
       ret = `${ret}${appended}`;
     }
   });
