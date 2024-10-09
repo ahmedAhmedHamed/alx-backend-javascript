@@ -7,3 +7,7 @@ export interface Teacher {
     [key: number]: any,
     [key: string]: any,
 }
+
+export interface Directors extends Teacher {
+    numberOfReports: number
+}
