@@ -37,5 +37,3 @@ const StudentClass: studentConstructorInterface = class implements studentClassI
     displayName() {return this.firstName};
 
 }
-
-let s = new StudentClass('a', 'b');
