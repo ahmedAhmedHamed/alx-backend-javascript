@@ -24,7 +24,7 @@ function countStudents(path) {
       for (let i = 0; i < value[0]; i += 1) {
         process.stdout.write(`${value[1][i]}`);
         if (i !== value[0] - 1) {
-          process.stdout.write(',');
+          process.stdout.write(', ');
         } else {
           console.log();
         }
