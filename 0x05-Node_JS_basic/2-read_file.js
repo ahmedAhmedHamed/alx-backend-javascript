@@ -32,8 +32,6 @@ function countStudents(path) {
         process.stdout.write(`${value[1][i]}`);
         if (i !== value[0] - 1) {
           process.stdout.write(', ');
-        } else {
-          process.stdout.write('\n');
         }
       }
     }
