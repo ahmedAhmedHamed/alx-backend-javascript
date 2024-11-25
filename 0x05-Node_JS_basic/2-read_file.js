@@ -20,6 +20,7 @@ function countStudents(path) {
       const fields = line.split(',');
       if (fields.length === 4) {
         numberOfStudents += 1;
+        if (!studentDistribution[fields[3]]) { studentDistribution[fields[3]] = [0, []]; }
         studentDistribution[fields[3]][0] += 1;
         studentDistribution[fields[3]][1].push(fields[0]);
       }
