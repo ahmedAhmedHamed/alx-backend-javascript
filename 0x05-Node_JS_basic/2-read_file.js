@@ -1,42 +1,45 @@
 const fs = require('fs');
 
 function countStudents(path) {
+  // check edge cases
   if (!fs.existsSync(path)) {
     throw new Error('Cannot load the database');
   }
   if (!fs.statSync(path).isFile()) {
     throw new Error('Cannot load the database');
   }
-  try {
-    const data = fs.readFileSync(path, 'utf8');
-    let numberOfStudents = 0;
-    const studentDistribution = {
-      CS: [0, []],
-      SWE: [0, []],
-    };
-    const lines = data.split('\n');
-    delete lines[0];
-    lines.forEach((line) => {
-      const fields = line.split(',');
-      if (fields.length === 4) {
-        numberOfStudents += 1;
-        if (!studentDistribution[fields[3]]) { studentDistribution[fields[3]] = [0, []]; }
-        studentDistribution[fields[3]][0] += 1;
-        studentDistribution[fields[3]][1].push(fields[0]);
-      }
-    });
-    console.log(`Number of students: ${numberOfStudents}`);
-    for (const [key, value] of Object.entries(studentDistribution)) {
-      process.stdout.write(`Number of students in ${key}: ${value[0]}. List: `);
-      for (let i = 0; i < value[0]; i += 1) {
-        process.stdout.write(`${value[1][i]}`);
-        if (i !== value[0] - 1) {
-          process.stdout.write(', ');
-        }
-      }
+
+  const lines = fs
+    .readFileSync(path, 'utf-8')
+    .toString('utf-8')
+    .trim()
+    .split('\n');
+
+  const studentDistribution = {};
+  const fieldNames = lines[0].split(',');
+  const studentPropertyNames = fieldNames.slice(0, fieldNames.length - 1);
+
+  for (const line of lines.slice(1)) {
+    const studentRecord = line.split(',');
+    const studentPropValues = studentRecord.slice(0, studentRecord.length - 1);
+    const field = studentRecord[studentRecord.length - 1];
+    if (!Object.keys(studentDistribution).includes(field)) {
+      studentDistribution[field] = [];
     }
-  } catch (e) {
-    throw new Error('Cannot load the database');
+    const studentEntries = studentPropertyNames
+      .map((propName, idx) => [propName, studentPropValues[idx]]);
+    studentDistribution[field].push(Object.fromEntries(studentEntries));
+  }
+
+  const totalStudents = Object
+    .values(studentDistribution)
+    .reduce((pre, cur) => (pre || []).length + cur.length);
+
+  console.log(`Number of students: ${totalStudents}`);
+
+  for (const [field, specialization] of Object.entries(studentDistribution)) {
+    const studentNames = specialization.map((student) => student.firstname).join(', ');
+    console.log(`Number of students in ${field}: ${specialization.length}. List: ${studentNames}`);
   }
 }
 
