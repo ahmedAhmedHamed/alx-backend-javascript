@@ -1,5 +1,5 @@
 const express = require('express');
-const fs = require("fs");
+const fs = require('fs');
 
 const app = express();
 const port = 1245;
@@ -30,13 +30,13 @@ function countStudents() {
           studentDistribution[field] = [];
         }
         const studentEntries = studentPropertyNames
-            .map((propName, idx) => [propName, studentPropValues[idx]]);
+          .map((propName, idx) => [propName, studentPropValues[idx]]);
         studentDistribution[field].push(Object.fromEntries(studentEntries));
       }
 
       const totalStudents = Object
-          .values(studentDistribution)
-          .reduce((pre, cur) => (pre || []).length + cur.length);
+        .values(studentDistribution)
+        .reduce((pre, cur) => (pre || []).length + cur.length);
       const ret = [];
       ret.push(`Number of students: ${totalStudents}\n`);
 
@@ -54,8 +54,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/students', (req, res) => {
-
-  let sent = ['This is the list of our students\n']
+  let sent = ['This is the list of our students\n'];
   countStudents().then((val) => {
     sent = sent.concat(val);
   }).catch((err) => {
