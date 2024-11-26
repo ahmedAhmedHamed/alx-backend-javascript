@@ -1,10 +1,7 @@
 const http = require('http');
-
-
-path = process.argv[2] || '';
-
-
 const fs = require('fs');
+
+const path = process.argv[2] || '';
 
 function countStudents(file) {
   return new Promise((resolve) => {
@@ -15,8 +12,7 @@ function countStudents(file) {
       throw new Error('Cannot load the database');
     }
     fs.readFile(path, 'utf-8', (err, data) => {
-      const lines = data.trim()
-          .split('\n');
+      const lines = data.trim().split('\n');
       const studentDistribution = {};
       const fieldNames = lines[0].split(',');
       const studentPropertyNames = fieldNames.slice(0, fieldNames.length - 1);
@@ -29,13 +25,13 @@ function countStudents(file) {
           studentDistribution[field] = [];
         }
         const studentEntries = studentPropertyNames
-            .map((propName, idx) => [propName, studentPropValues[idx]]);
+          .map((propName, idx) => [propName, studentPropValues[idx]]);
         studentDistribution[field].push(Object.fromEntries(studentEntries));
       }
 
       const totalStudents = Object
-          .values(studentDistribution)
-          .reduce((pre, cur) => (pre || []).length + cur.length);
+        .values(studentDistribution)
+        .reduce((pre, cur) => (pre || []).length + cur.length);
 
       file.write(`Number of students: ${totalStudents}`);
 
@@ -48,10 +44,9 @@ function countStudents(file) {
   });
 }
 
-
 const app = http.createServer((req, res) => {
   if (req.url.endsWith('students')) {
-    countStudents(res).then(()=>res.end());
+    countStudents(res).then(() => res.end());
   } else {
     res.write('Hello Holberton School!');
     res.end();
