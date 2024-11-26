@@ -51,9 +51,8 @@ const app = http.createServer((req, res) => {
   if (req.url.endsWith('students')) {
     res.write('This is the list of our students\n');
     countStudents(res).catch((err) => {
-      const message = err instanceof Error ? err.message : err.toString()
+      const message = err instanceof Error ? err.message : err.toString();
       res.write(message);
-      res.write('\n')
     }).then(() => res.end());
   } else {
     res.write('Hello Holberton School!');
