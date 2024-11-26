@@ -15,7 +15,6 @@ function countStudents(file) {
       if (err) {
         reject(new Error('Cannot load the database'));
       }
-      file.write('This is the list of our students\n');
       const lines = data.trim().split('\n');
       const studentDistribution = {};
       const fieldNames = lines[0].split(',');
@@ -50,7 +49,12 @@ function countStudents(file) {
 
 const app = http.createServer((req, res) => {
   if (req.url.endsWith('students')) {
-    countStudents(res).catch(() => res.write('Cannot load the database\n')).then(() => res.end());
+    res.write('This is the list of our students\n');
+    countStudents(res).catch((err) => {
+      const message = err instanceof Error ? err.message : err.toString()
+      res.write(message);
+      res.write('\n')
+    }).then(() => res.end());
   } else {
     res.write('Hello Holberton School!');
     res.end();
