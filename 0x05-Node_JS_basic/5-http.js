@@ -4,14 +4,18 @@ const fs = require('fs');
 const path = process.argv[2] || '';
 
 function countStudents(file) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     if (!fs.existsSync(path)) {
-      throw new Error('Cannot load the database');
+      reject(new Error('Cannot load the database'));
     }
     if (!fs.statSync(path).isFile()) {
-      throw new Error('Cannot load the database');
+      reject(new Error('Cannot load the database'));
     }
     fs.readFile(path, 'utf-8', (err, data) => {
+      if (err) {
+        reject(new Error('Cannot load the database'));
+      }
+      file.write('This is the list of our students\n');
       const lines = data.trim().split('\n');
       const studentDistribution = {};
       const fieldNames = lines[0].split(',');
@@ -46,8 +50,7 @@ function countStudents(file) {
 
 const app = http.createServer((req, res) => {
   if (req.url.endsWith('students')) {
-    res.write('This is the list of our students\n');
-    countStudents(res).then(() => res.end());
+    countStudents(res).catch(() => res.write('Cannot load the database\n')).then(() => res.end());
   } else {
     res.write('Hello Holberton School!');
     res.end();
