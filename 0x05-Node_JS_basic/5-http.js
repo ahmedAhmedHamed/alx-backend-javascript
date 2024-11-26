@@ -50,14 +50,12 @@ function countStudents(file) {
 
 
 const app = http.createServer((req, res) => {
-  console.log('before');
   if (req.url.endsWith('students')) {
     countStudents(res).then(()=>res.end());
   } else {
     res.write('Hello Holberton School!');
     res.end();
   }
-  console.log('after');
 });
 app.listen(1245);
 
