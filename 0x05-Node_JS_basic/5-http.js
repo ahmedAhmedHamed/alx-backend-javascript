@@ -33,11 +33,11 @@ function countStudents(file) {
         .values(studentDistribution)
         .reduce((pre, cur) => (pre || []).length + cur.length);
 
-      file.write(`Number of students: ${totalStudents}`);
+      file.write(`Number of students: ${totalStudents}\n`);
 
       for (const [field, specialization] of Object.entries(studentDistribution)) {
         const studentNames = specialization.map((student) => student.firstname).join(', ');
-        file.write(`Number of students in ${field}: ${specialization.length}. List: ${studentNames}`);
+        file.write(`Number of students in ${field}: ${specialization.length}. List: ${studentNames}\n`);
       }
       resolve();
     });
