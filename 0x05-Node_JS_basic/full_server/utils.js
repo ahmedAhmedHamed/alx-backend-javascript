@@ -1,5 +1,3 @@
-import AppController from "./controllers/AppController";
-
 const fs = require('fs');
 
 function readDatabase(path) {
@@ -27,12 +25,12 @@ function readDatabase(path) {
           studentDistribution[field] = [];
         }
         const studentEntries = studentPropertyNames
-            .map((propName, idx) => [propName, studentPropValues[idx]]);
+          .map((propName, idx) => [propName, studentPropValues[idx]]);
         studentDistribution[field].push(Object.fromEntries(studentEntries));
       }
 
       for (const key of Object.keys(studentDistribution)) {
-        for (let i = 0; i < studentDistribution[key].length; i++) {
+        for (let i = 0; i < studentDistribution[key].length; i += 1) {
           studentDistribution[key][i] = studentDistribution[key][i].firstname;
         }
       }
