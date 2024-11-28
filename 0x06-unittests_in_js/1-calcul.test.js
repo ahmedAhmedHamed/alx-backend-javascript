@@ -21,4 +21,16 @@ describe('calculateNumber', function () {
     assert.strictEqual(calculateNumber('SUM', 1.5, 3.7), 6);
   });
 
+  it('subtract', function () {
+    assert.strictEqual(calculateNumber('SUBTRACT', 1.4, 4.5), -4);
+  });
+
+  it('divide', function () {
+    assert.strictEqual(calculateNumber('DIVIDE', 1.4, 4.5), 0.2);
+  });
+
+  it('divide error', function () {
+    assert.strictEqual(calculateNumber('DIVIDE', 1.4, 0), 'Error');
+  });
+
 });
