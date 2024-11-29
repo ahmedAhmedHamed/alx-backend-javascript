@@ -4,7 +4,7 @@ const { expect } = require('chai');
 describe('API integration test', () => {
   const API_URL = 'http://localhost:7865';
 
-  it('GET / returns correct response', (done) => {
+  it('checks that get returns correct response', (done) => {
     request.get(`${API_URL}/`, (_error, response, body) => {
       expect(response.statusCode).to.be.equal(200);
 
