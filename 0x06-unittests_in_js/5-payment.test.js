@@ -18,8 +18,6 @@ describe('sendPaymentRequestToApi', () => {
   });
 
   it('tests sendPaymentRequestToApi.', () => {
-    const mySpy = sinon.spy(console);
-
     sendPaymentRequestToApi(100, 20);
 
     expect(mySpy.log.calledWith('The total is: 120')).to.be.true;
@@ -27,8 +25,6 @@ describe('sendPaymentRequestToApi', () => {
   });
 
   it('tests sendPaymentRequestToApi.', () => {
-    const mySpy = sinon.spy(console);
-
     sendPaymentRequestToApi(10, 10);
 
     expect(mySpy.log.calledWith('The total is: 20')).to.be.true;
