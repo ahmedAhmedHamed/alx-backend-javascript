@@ -9,9 +9,6 @@ app.get('/', (_, res) => {
   res.send('Welcome to the payment system');
 });
 
-app.listen(PORT, () => {
-  console.log(`API available on localhost port ${PORT}`);
-});
 
 app.get('/cart/:id(\\d+)', (request, res) => {
   const id = request.params.id;
@@ -19,12 +16,7 @@ app.get('/cart/:id(\\d+)', (request, res) => {
 });
 
 app.get('/available_payments', (_, res) => {
-  res.send(`{
-  payment_methods: {
-    credit_cards: true,
-    paypal: false
-  }
-}`);
+  res.json({ payment_methods: { credit_cards: true, paypal: false } });
 });
 
 app.post('/login', (req, res) => {
@@ -33,6 +25,11 @@ app.post('/login', (req, res) => {
     username = req.body.userName;
   }
   res.send(`Welcome ${username}`);
+});
+
+
+app.listen(PORT, () => {
+  console.log(`API available on localhost port ${PORT}`);
 });
 
 module.exports = app;
